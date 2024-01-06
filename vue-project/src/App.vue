@@ -1,47 +1,68 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app" class="container">
+    <!-- Title of the To-Do List -->
+    <h1>My To-Do List</h1>
+    <div class="split">
+      <div class="left">
+        <!-- Input fields for adding a new task -->
+        <input v-model="newTaskName" placeholder="Task Name" />
+        <textarea v-model="newTaskDescription" placeholder="Task Description"></textarea>
+        <input v-model="newTaskDuration" placeholder="Duration (in minutes)" type="number" />
+        <!-- Button to add a new task -->
+        <button @click="addTask">Add Task</button>
+      </div>
+      <div class="right">
+        <ul>
+          <!-- Render the TaskComponent for each task in the 'tasks' array -->
+          <TaskComponent 
+            v-for="task in tasks" 
+            :key="task.id" 
+            :task="task" 
+            @deleteTask="deleteTask"
+          />
+        </ul>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import TaskComponent from './TaskComponent.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+export default {
+  name: 'App',
+  components: {
+    TaskComponent
+  },
+  data() {
+    return {
+      // Data properties to store new task information and existing tasks
+      newTaskName: '',
+      newTaskDescription: '',
+      newTaskDuration: '',
+      tasks: [], // Array to store tasks
+      nextTaskId: 1 // ID for the next task to be added
+    };
+  },
+  methods: {
+    // Method to add a new task to the 'tasks' array
+    addTask() {
+      if (this.newTaskName.trim() === '') return; // Check if the task name is empty
+      this.tasks.push({ 
+        id: this.nextTaskId++, // Generate a unique task ID
+        name: this.newTaskName, 
+        description: this.newTaskDescription, 
+        duration: this.newTaskDuration 
+      });
+      // Clear input fields after adding a task
+      this.newTaskName = '';
+      this.newTaskDescription = '';
+      this.newTaskDuration = '';
+    },
+    // Method to delete a task based on its ID
+    deleteTask(taskId) {
+      this.tasks = this.tasks.filter(task => task.id !== taskId); // Remove the task with the specified ID
+    }
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+};
+</script>

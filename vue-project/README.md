@@ -1,15 +1,3 @@
-# vue-project
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
 ## Project Setup
 
 ```sh
@@ -27,3 +15,15 @@ npm run dev
 ```sh
 npm run build
 ```
+Understanding the Code
+
+    main.js: This file creates a new Vue instance and mounts the app to the DOM. It's the entry point of the Vue application.
+
+    App.vue: This is the main component of the application. It serves as the root container for the Vue app.
+
+    TaskComponent.vue: This file defines a reusable Vue component for individual tasks. It showcases how to define a Vue component and handle data and events.
+
+Features
+
+    Task Display: The TaskComponent.vue displays individual tasks.
+    Reactivity: Demonstrates Vue's reactive data binding. Changes in the application's state are automatically reflected in the UI.
